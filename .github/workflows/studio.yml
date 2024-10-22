@@ -45,10 +45,10 @@ jobs:
           echo "cache=$cache" >> $GITHUB_OUTPUT
           echo "package_manager=$package_manager" >> $GITHUB_OUTPUT
 
-      - uses: pnpm/action-setup@v4
-        if: ${{ steps.pkgman.outputs.package_manager == 'pnpm' }}
-        name: Install pnpm
-        id: pnpm-install
+      # - uses: pnpm/action-setup@v4
+      #   if: ${{ steps.pkgman.outputs.package_manager == 'pnpm' }}
+      #   name: Install pnpm
+      #   id: pnpm-install
 
       - uses: actions/setup-node@v4
         with:
@@ -59,7 +59,7 @@ jobs:
         run: ${{ steps.pkgman.outputs.package_manager }} install
 
       - name: Install @nuxthq/studio
-        run: ${{ steps.pkgman.outputs.package_manager }} add -D @nuxthq/studio
+        run: ${{ steps.pkgman.outputs.package_manager }} install -D @nuxthq/studio
 
       - name: Create .nuxtrc
         run: echo $'\nautoImport=true\nmodules[]=@nuxthq/studio' >> .nuxtrc
