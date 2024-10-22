@@ -4,10 +4,14 @@ export default defineNuxtConfig({
     '/': { prerender: true }
   },
   build: {
-    extend(config) {
-      config.plugins = config.plugins.filter(
-        (plugin) => plugin.constructor.name !== 'RequestIdleCallbackPolyfill'
-      );
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
+        },
+      },
     },
   },
 })
