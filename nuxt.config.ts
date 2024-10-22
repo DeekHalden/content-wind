@@ -4,6 +4,10 @@ export default defineNuxtConfig({
     '/': { prerender: true }
   },
   build: {
-    transpile: ['@vue/runtime-core'],
+    extend(config) {
+      config.plugins = config.plugins.filter(
+        (plugin) => plugin.constructor.name !== 'RequestIdleCallbackPolyfill'
+      );
+    },
   },
 })
